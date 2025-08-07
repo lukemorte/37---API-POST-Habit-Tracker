@@ -7,5 +7,9 @@ import requests
 
 load_dotenv()
 
-API_PIXELA = os.getenv("API_PIXELA")
+PIXELA_ENDPOINT = os.getenv("API_PIXELA")
+USER_PARAMS = {
+    "token": 
+}
 
+requests.post()
