@@ -9,15 +9,38 @@ load_dotenv()
 
 PIXELA_API = os.getenv("PIXELA_API")
 PIXELA_TOKEN = os.getenv("PIXELA_TOKEN")
+PIXELA_USERNAME = os.getenv("PIXELA_USERNAME")
+
 USER_PARAMS = {
     "token": PIXELA_TOKEN,
-    "username": "lukemorte",
+    "username": PIXELA_USERNAME,
     "agreeTermsOfService": "yes",
     "notMinor": "yes",
 }
-string = PIXELA_API + "/lukemorte"
-print(string)
-# response = requests.post(url=PIXELA_API, json=USER_PARAMS)
-response = requests.delete(string)
-response.raise_for_status()
-print(response)
+
+GRAPH_CONFIG = {
+    "id": "graph1",
+    "name": "Cycling Graph",
+    "unit": "Km",
+    "type": "float",
+    "color": "ajisai",
+}
+
+HEADERS = {
+    "X-USER-TOKEN": PIXELA_TOKEN
+}
+
+CREATE_PIXEL_CONFIG = {
+    "date": "20250809",
+    "quantity": "70",
+    
+}
+
+# graph_endpoint = f"{PIXELA_API}/{PIXELA_USERNAME}/graphs"
+# response = requests.post(url=graph_endpoint, json=GRAPH_CONFIG, headers=HEADERS)
+# print(response.text)
+
+
+create_pixel_endpoint = f"{PIXELA_API}/{PIXELA_USERNAME}/graphs/{GRAPH_CONFIG['id']}"
+response = requests.post(url=create_pixel_endpoint, json=CREATE_PIXEL_CONFIG, headers=HEADERS)
+print(response.text)
