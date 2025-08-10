@@ -3,6 +3,7 @@
 import os
 from dotenv import load_dotenv
 import requests
+from datetime import datetime
 
 
 load_dotenv()
@@ -30,17 +31,37 @@ HEADERS = {
     "X-USER-TOKEN": PIXELA_TOKEN
 }
 
-CREATE_PIXEL_CONFIG = {
-    "date": "20250809",
-    "quantity": "70",
-    
-}
 
 # graph_endpoint = f"{PIXELA_API}/{PIXELA_USERNAME}/graphs"
 # response = requests.post(url=graph_endpoint, json=GRAPH_CONFIG, headers=HEADERS)
 # print(response.text)
 
 
-create_pixel_endpoint = f"{PIXELA_API}/{PIXELA_USERNAME}/graphs/{GRAPH_CONFIG['id']}"
-response = requests.post(url=create_pixel_endpoint, json=CREATE_PIXEL_CONFIG, headers=HEADERS)
+today = datetime(year=2025, month=8, day=8)
+
+CREATE_PIXEL_CONFIG = {
+    "date": today.strftime("%Y%m%d"),
+    "quantity": 0,
+}
+
+
+UPDATE_PIXEL_CONFIG = {
+    "quantity": input("How many km did you cycle today?: "),
+}
+
+DELETE_PIXEL_CONFIG = {
+    
+}
+
+
+# create_pixel_endpoint = f"{PIXELA_API}/{PIXELA_USERNAME}/graphs/{GRAPH_CONFIG['id']}"
+# response = requests.post(url=create_pixel_endpoint, json=CREATE_PIXEL_CONFIG, headers=HEADERS)
+# print(response.text)
+
+update_pixel_endpoint = f"{PIXELA_API}/{PIXELA_USERNAME}/graphs/{GRAPH_CONFIG['id']}/{today.strftime('%Y%m%d')}"
+response = requests.put(url=update_pixel_endpoint, json=UPDATE_PIXEL_CONFIG, headers=HEADERS)
 print(response.text)
+
+# delete_pixel_endpoint = f"{PIXELA_API}/{PIXELA_USERNAME}/graphs/{GRAPH_CONFIG['id']}/{today.strftime('%Y%m%d')}"
+# response = requests.delete(url=delete_pixel_endpoint, headers=HEADERS)
+# print(response.text)
